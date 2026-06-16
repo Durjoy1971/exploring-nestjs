@@ -3,8 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AppService {
-
-  constructor(private configService: ConfigService) { }
+  constructor(private configService: ConfigService) {}
   getHello(): string {
     return 'Hello World!';
   }
@@ -16,6 +15,6 @@ export class AppService {
     const port = this.configService.get<number>('PORT', 3000);
     // 3. Throw an error if the key is missing (NestJS 9+)
     const dbUser = this.configService.getOrThrow<string>('DATABASE_USER');
-    return `Connecting to host: ${dbHost}`;
+    return `Connecting to host: ${dbHost}:${port} as user ${dbUser}`;
   }
 }

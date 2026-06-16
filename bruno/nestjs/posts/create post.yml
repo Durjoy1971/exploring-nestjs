@@ -1,0 +1,22 @@
+info:
+  name: create post
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/posts
+  auth: inherit
+  body:
+    type: json
+    data: |-
+      {
+        "description": "Learning NestJS validation and custom pipes.",
+        "author": "Trainee Backend"
+      }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -9,9 +9,11 @@ describe('AppController', () => {
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule.forRoot({
-        envFilePath: '.env', // Make sure it can load env if needed, or we can mock/ignore it
-      })],
+      imports: [
+        ConfigModule.forRoot({
+          envFilePath: '.env', // Make sure it can load env if needed, or we can mock/ignore it
+        }),
+      ],
       controllers: [AppController],
       providers: [AppService],
     }).compile();

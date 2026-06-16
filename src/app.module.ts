@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HelloModule } from './hello/hello.module';
 import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 
@@ -10,6 +11,7 @@ import * as Joi from 'joi';
   imports: [
     HelloModule,
     UserModule,
+    PostModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
@@ -18,9 +20,9 @@ import * as Joi from 'joi';
         DATABASE_HOST: Joi.string().required(),
         DATABASE_USER: Joi.string().required(),
       }),
-    })
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

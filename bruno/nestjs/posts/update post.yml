@@ -1,0 +1,22 @@
+info:
+  name: update post
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: http://localhost:3000/posts/1
+  auth: inherit
+  body:
+    type: json
+    data: |-
+      {
+        "description": "Explaining validation DTOs in NestJS.",
+        "author": "Senior Engineer Partner"
+      }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
