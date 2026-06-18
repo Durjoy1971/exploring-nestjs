@@ -1,0 +1,20 @@
+const hardcodedAccessToken = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICItNHlHdFdJNWRDMlhPTTBmQkFjanpvSm5RMkxXWW9iOWpyY0VQM3kwMjFBIn0.eyJleHAiOjE3ODE3ODEyNjEsImlhdCI6MTc4MTc4MDk2MSwianRpIjoib25ydGFjOmRmZjkyMmNlLWM1YjktMDc0MS05ZGY1LWE0MmE2YzI5MTk2YSIsImlzcyI6Imh0dHBzOi8vYWRtaW4ub25laWQuY29tLmJkL3JlYWxtcy9vbmVpZCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJlZGIzYjBmOC0xNTliLTRiYjEtODljNi02MGE2ZTA1M2EwMDgiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhY2NvdW50LWNvbnNvbGUiLCJzaWQiOiJmNzgzMDEwOS05NmU4LTRiZWYtOGMxYy04MWRjMDQ0MWM0NWQiLCJhY3IiOiIwIiwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkFORFJFQVMgV0lSVEhNVUVMTEVSIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYW5kcmVhc0B3aXJ0aG11ZWxsZXIuY29tIiwiZ2l2ZW5fbmFtZSI6IkFORFJFQVMiLCJmYW1pbHlfbmFtZSI6IldJUlRITVVFTExFUiIsImVtYWlsIjoiYW5kcmVhc0B3aXJ0aG11ZWxsZXIuY29tIn0.K-utqBQXHyxWJFr8pn4ldHAx3CdgjhuUWDe5gok1bzRMAHvVkxvVNmPxZ-i4N60hFKZ5VFz--Xku9dcTCP3Krtrp_hheOjH-XcO60nn7Kxm4SRArdepFjJ56es2MWeNmt0t2Q2s_EIxSRvc5PC0BzDfvUkxRhEZaA7RZ8c8dOl7TX3J7fyiWpiHevqph4Af0YdQv14xZAiylFaT6iPHgn2Ti5SyJZ9t-L3fRoR05vivsnaYPR1_bgpGe9eqWgPid9c6ZE8mxTb5rjeMTq-tEWBEw_hazcFK593QSNMSpJ7CdGG6R8gZYWDcaQmOXkPtMue9UfOfgfM2B_K1Zy2r1XQ";
+
+const authStorageData = {
+  state: {
+    accessToken: hardcodedAccessToken,
+    refreshToken: "eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlYjBmNzAxMy03YTMxLTQzZGQtODYzMS00N2UyZWRhNmE4YTYifQ.eyJleHAiOjE3ODY5NjQ5NTYsImlhdCI6MTc4MTc4MDk2MSwianRpIjoiMjJhOTMwNzUtYTNjOC1jNGE4LTk1ZWMtMDYzZGJiYjIzZTRiIiwiaXNzIjoiaHR0cHM6Ly9hZG1pbi5vbmVpZC5jb20uYmQvcmVhbG1zL29uZWlkIiwiYXVkIjoiaHR0cHM6Ly9hZG1pbi5vbmVpZC5jb20uYmQvcmVhbG1zL29uZWlkIiwic3ViIjoiZWRiM2IwZjgtMTU5Yi00YmIxLTg5YzYtNjBhNmUwNTNhMDA4IiwidHlwIjoiUmVmcmVzaCIsImF6cCI6ImFjY291bnQtY29uc29sZSIsInNpZCI6ImY3ODMwMTA5LTk2ZTgtNGJlZi04YzFjLTgxZGMwNDQxYzQ1ZCIsInNjb3BlIjoib3BlbmlkIHJvbGVzIGFjciBlbWFpbCBwcm9maWxlIHdlYi1vcmlnaW5zIGJhc2ljIn0.KIGtm6AXhAF3KBnNlSp4dZ6JndOo6IAhkUMtAU7EHDtuFdImX_6hHVF5swZK9yoT2BqZNgU5Fp9yUNMakPeV1Q",
+    tokenExpiresAt: Date.now() + 3600 * 1000,             // Expires in 1 hour
+    refreshExpiresAt: Date.now() + 30 * 24 * 3600 * 1000, // Refresh token expires in 30 days
+    isAuthenticated: true,
+    mfaEnabled: false,
+    mfaMethod: null,
+    rememberedEmail: null,
+    ekycVerified: true                                    // Set to false if you want to test the profile/ekyc-pending page redirection
+  },
+  version: 0
+};
+
+// Save to localStorage and refresh/redirect the page
+localStorage.setItem("auth-storage", JSON.stringify(authStorageData));
+window.location.href = "/home";
