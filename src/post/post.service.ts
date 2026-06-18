@@ -1,80 +1,42 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-
-export class PostItem {
-  id: number;
-  description: string;
-  author: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Post } from './entities/post.entity';
 
 @Injectable()
 export class PostService {
-  // In-memory temporary storage initialized with a starter post
-  private posts: PostItem[] = [
-    {
-      id: 1,
-      description: 'Understanding NestJS Dependency Injection',
-      author: 'Senior Developer',
-      createdAt: new Date('2026-06-16T08:00:00.000Z'),
-      updatedAt: new Date('2026-06-16T08:00:00.000Z'),
-    },
-  ];
+  constructor(
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>,
+  ) {}
 
-  // Counter to generate unique IDs
-  private idCounter = 1;
-
-  findAll(): PostItem[] {
-    return this.posts;
+  async findAll(): Promise<Post[]> {
+    return await this.postRepository.find();
   }
 
-  findOne(id: number): PostItem {
-    const post = this.posts.find((p) => p.id === id);
+  async findOne(id: number): Promise<Post> {
+    const post = await this.postRepository.findOneBy({ id });
     if (!post) {
-      // NestJS provides built-in HTTP exceptions. Throwing NotFoundException
-      // automatically translates to a 404 response on the HTTP layer.
       throw new NotFoundException(`Post with ID ${id} not found`);
     }
     return post;
   }
 
-  create(createPostDto: CreatePostDto): PostItem {
-    this.idCounter++;
-    const newPost: PostItem = {
-      id: this.idCounter,
-      description: createPostDto.description,
-      author: createPostDto.author,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    this.posts.push(newPost);
-    return newPost;
+  async create(createPostDto: CreatePostDto): Promise<Post> {
+    const newPost = this.postRepository.create(createPostDto);
+    return await this.postRepository.save(newPost);
   }
 
-  update(id: number, updatePostDto: UpdatePostDto): PostItem {
-    const post = this.findOne(id); // Reuses findOne, which throws NotFoundException if missing
-
-    // Update only the provided fields from the partial update object
-    if (updatePostDto.description !== undefined) {
-      post.description = updatePostDto.description;
-    }
-    if (updatePostDto.author !== undefined) {
-      post.author = updatePostDto.author;
-    }
-
-    post.updatedAt = new Date();
-    return post;
+  async update(id: number, updatePostDto: UpdatePostDto): Promise<Post> {
+    const post = await this.findOne(id);
+    this.postRepository.merge(post, updatePostDto);
+    return await this.postRepository.save(post);
   }
 
-  remove(id: number): PostItem {
-    const postIndex = this.posts.findIndex((p) => p.id === id);
-    if (postIndex === -1) {
-      throw new NotFoundException(`Post with ID ${id} not found`);
-    }
-
-    const [deletedPost] = this.posts.splice(postIndex, 1);
-    return deletedPost;
+  async remove(id: number): Promise<Post> {
+    const post = await this.findOne(id);
+    return await this.postRepository.remove(post);
   }
 }
