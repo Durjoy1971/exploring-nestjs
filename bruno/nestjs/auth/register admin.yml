@@ -1,11 +1,11 @@
 info:
-  name: create post
+  name: Register Admin
   type: http
-  seq: 1
+  seq: 4
 
 http:
   method: POST
-  url: http://localhost:3000/posts
+  url: http://localhost:3000/auth/register-admin
   headers:
     - name: Authorization
       value: Bearer {{accessToken}}
@@ -14,7 +14,8 @@ http:
     type: json
     data: |-
       {
-        "description": "Learning NestJS validation and custom pipes."
+        "username": "admin_user",
+        "password": "adminpassword123"
       }
 
 settings:

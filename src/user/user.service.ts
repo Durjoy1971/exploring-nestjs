@@ -1,43 +1,64 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
 import { HelloService } from '../hello/hello.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly helloService: HelloService) {}
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    private readonly helloService: HelloService,
+  ) {}
 
-  getAllUsers(): { id: number; name: string; age: number }[] {
-    return [
-      {
-        id: 1,
-        name: 'John Doe',
-        age: 30,
-      },
-      {
-        id: 2,
-        name: 'Jane Doe',
-        age: 25,
-      },
-      {
-        id: 3,
-        name: 'Bob Smith',
-        age: 35,
-      },
-    ];
+  async create(userData: Partial<User>): Promise<User> {
+    const user = this.userRepository.create(userData);
+    return await this.userRepository.save(user);
   }
 
-  getUserbyId(id: number): { id: number; name: string; age: number } | string {
-    const user = this.getAllUsers().find((user) => user.id === id);
-    if (user) {
-      return user;
-    }
-    return 'User not found';
+  async findByUsername(username: string): Promise<User | null> {
+    return await this.userRepository.findOne({
+      where: { username },
+    });
   }
 
-  getWelcomeMessageWithId(userId: number): string {
-    const user = this.getUserbyId(userId);
-    if (typeof user === 'string') {
-      return user;
+  async findByUsernameWithPassword(username: string): Promise<User | null> {
+    return await this.userRepository.findOne({
+      where: { username },
+      select: {
+        id: true,
+        username: true,
+        password: true,
+        role: true,
+      },
+    });
+  }
+
+  async findById(id: number): Promise<User | null> {
+    return await this.userRepository.findOne({
+      where: { id },
+    });
+  }
+
+  async update(id: number, updateData: Partial<User>): Promise<void> {
+    await this.userRepository.update(id, updateData);
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return await this.userRepository.find();
+  }
+
+  async getUserbyId(id: number): Promise<User> {
+    const user = await this.findById(id);
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
-    return this.helloService.getHelloWithName(user.name);
+    return user;
+  }
+
+  async getWelcomeMessageWithId(userId: number): Promise<string> {
+    const user = await this.getUserbyId(userId);
+    return this.helloService.getHelloWithName(user.username);
   }
 }

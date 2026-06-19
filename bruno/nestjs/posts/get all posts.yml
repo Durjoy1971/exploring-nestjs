@@ -6,6 +6,19 @@ info:
 http:
   method: GET
   url: http://localhost:3000/posts
+  params:
+    - name: page
+      value: 1
+      type: query
+      enabled: true
+    - name: limit
+      value: 10
+      type: query
+      enabled: true
+    - name: search
+      value: 
+      type: query
+      enabled: false
   auth: inherit
 
 settings:

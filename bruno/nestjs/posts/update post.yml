@@ -6,13 +6,15 @@ info:
 http:
   method: PATCH
   url: http://localhost:3000/posts/1
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
   auth: inherit
   body:
     type: json
     data: |-
       {
-        "description": "Explaining validation DTOs in NestJS.",
-        "author": "Senior Engineer Partner"
+        "description": "Explaining validation DTOs in NestJS."
       }
 
 settings:

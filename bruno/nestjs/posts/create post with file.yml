@@ -1,0 +1,29 @@
+info:
+  name: create post with file
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: http://localhost:3000/posts
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  body:
+    type: multipart-form
+    data:
+      - name: description
+        type: text
+        value: emne
+        contentType: text
+      - name: file
+        type: file
+        value:
+          - /home/bs01415/Documents/qrwithprofilevds.png
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

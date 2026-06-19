@@ -5,7 +5,10 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:3000/posts/2
+  url: http://localhost:3000/posts/5
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
   auth: inherit
 
 settings:

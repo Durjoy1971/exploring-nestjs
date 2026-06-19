@@ -1,0 +1,23 @@
+info:
+  name: Register
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/auth/register
+  body:
+    type: json
+    data: |-
+      {
+        "username": "joy",
+        "password": "durjoy2050",
+        "role": "user"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

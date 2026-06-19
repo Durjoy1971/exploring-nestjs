@@ -2,6 +2,22 @@ opencollection: 1.0.0
 
 info:
   name: nestjs
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+request:
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiZHVyam95Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgxODczNjAyLCJleHAiOjE3ODE4NzcyMDJ9.plUEAcLMuQNn_YQXho1zZsQhOxXB5qD8n8QEZSW4kuA
 bundled: false
 extensions:
   bruno:

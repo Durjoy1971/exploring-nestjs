@@ -1,0 +1,26 @@
+info:
+  name: update post with file
+  type: http
+  seq: 7
+
+http:
+  method: PATCH
+  url: http://localhost:3000/posts/<POST_ID>
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  body:
+    type: multipartForm
+    data:
+      - name: description
+        value: "Updating the post and replacing the file!"
+        type: text
+      - name: file
+        type: file
+        value: 
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
